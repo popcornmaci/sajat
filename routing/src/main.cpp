@@ -56,7 +56,7 @@ int main(int argc, char *argv[])
     
     for (const auto& l : path)
     {
-      std::cout <<"lat= "<< l.lat() << "\t" <<"lon= "<< l.lon() << std::endl;
+      std::cout <<"lat="<< l.lat() << "\t" <<"lon="<< l.lon() << std::endl;
     }
     
     std::ofstream file;
