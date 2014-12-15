@@ -31,3 +31,6 @@
 dist/
 build/
 target/
+.classpath
+.project
+.settings/
