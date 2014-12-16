@@ -263,7 +263,7 @@ public class Viewer {
 		String[] tfLabels = new String[2];
 
 		tfLabels[0] = factories.get(0).getInfo().getName();
-		tfLabels[1] = "Visual Earth Bing";
+		tfLabels[1] = "Virtual Earth Bing";
 
 		final JComboBox<String> combo = new JComboBox<String>(tfLabels);
 		combo.addItemListener(new ItemListener() {
