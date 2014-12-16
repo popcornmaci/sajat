@@ -4,8 +4,29 @@
 #include <osmium/visitor.hpp>
 #include <boost/config.hpp>
 #include <boost/graph/dijkstra_shortest_paths.hpp>
+#include <boost/graph/astar_search.hpp>
 #include "NearestNode.h"
 #include "Typedefs.h"
+
+class heuristic : public boost::astar_heuristic<graph_t, double>
+{
+  vertexloc_map_t &vertex_map;
+  vertex_t goal;
+
+public:
+  heuristic(vertexloc_map_t &vertex_map, vertex_t goal):
+    vertex_map(vertex_map),
+    goal(goal)
+  {}
+
+  double operator()(vertex_t u)
+  {
+    double dx = vertex_map[goal].lon() - vertex_map[u].lon();
+    double dy = vertex_map[goal].lat() - vertex_map[u].lat();
+
+    return dx*dx + dy*dy;
+  }
+};
 
 class Route : public osmium::handler::Handler
 {
@@ -65,6 +86,7 @@ public:
   std::vector<double> distances(boost::num_vertices(g));
   std::vector<vertex_t> predecessors(boost::num_vertices(g));
   boost::dijkstra_shortest_paths(g, startVertex, boost::predecessor_map(&predecessors[0]).distance_map(&distances[0]));
+ //boost::astar_search_tree(g,startVertex,heuristic(vertexloc_map, endVertex) , boost::predecessor_map(&predecessors[0]).distance_map(&distances[0]));
   
     if (endVertex != predecessors[endVertex])
     {
